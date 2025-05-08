@@ -15,11 +15,10 @@ Depends:
     R (>= 3.1.0),
     ggplot2,
     magrittr,
-	igraph
+	  igraph
 Imports:
     matrixStats,
     plyr,
     igraph,
-    gtools,
-    R.utils
+    gtools
 RoxygenNote: 5.0.1

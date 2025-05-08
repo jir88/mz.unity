@@ -75,7 +75,7 @@ execute.search = function(A, B, M, ppm, BM.limits) {
     mats = M.search(ABm.d, ABm.s, ABz.d, M, A, ppm, M.limits = BM.limits[i,])
     
     mats = lapply(mats, function(l) {
-      ABm.d.ind = R.utils::arrayIndex(l$d, dim(ABm.d))
+      ABm.d.ind = base::arrayInd(l$d, dim(ABm.d))
       
       l$A = ABm.d.ind[,1]
       l$B = B.combs[ABm.d.ind[,2], ,drop=F]
