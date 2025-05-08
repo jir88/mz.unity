@@ -2,19 +2,19 @@
 #' 
 #' \code{mz.unity.search} searches <m,z> values supplied in \code{B} and \code{M} for combinations which sum to a <m,z> value in \code{A}.
 #' 
-#' This function encapsulates the combinatorial search for simple and complex peak relationships.  The search is very general and can be tailored to a specific type of relationship with the parameters \code{BM.limits} and \code{M}.  \code{M} allows you to specify additional granular formula which are not present in A and B yet could relate peaks.  This inlcudes things like isotopic masses and small ions.  \code{BM.limits} specifies the combinatorial depth with which to search.  For isotopes in which no intermediate masses are missing BM.limits could be \code{1, 1, 1}.  We can search beyond one missing peak with \code{1,2,1}.
+#' This function encapsulates the combinatorial search for simple and complex peak relationships.  The search is very general and can be tailored to a specific type of relationship with the parameters \code{BM.limits} and \code{M}.  \code{M} allows you to specify additional granular formula which are not present in A and B yet could relate peaks.  This includes things like isotopic masses and small ions.  \code{BM.limits} specifies the combinatorial depth with which to search.  For isotopes in which no intermediate masses are missing BM.limits could be \code{1, 1, 1}.  We can search beyond one missing peak with \code{1,2,1}.
 #' 
 #' Several sets of granular formula are included by default.  They include isotopes (\code{M.iso}), charge carriers (\code{M.z}), and neutral formula (\code{M.n}).  These can be combined or extended to build a search for any set of relationships. It is generally useful to keep the set of granular formula in small groups appropriate for the combinatorial depth.  For example, isotopes generally require only a single step, whereas we may want to search for cross-polarity relationships which require the exchange of two or more charge carriers.
 #' 
 #' @param A Matrix containing columns named "m" and "z".  Column "m" is an exact mass. Column "z" is an integer charge.
-#' @param B Matrix containing columns named "m", "z", and "d".   Column "d" is one of {-1, 0, 1} denoting weather this species may be added (1) or subtracted (-1) or both (0).
+#' @param B Matrix containing columns named "m", "z", and "d". Column "d" is one of \{-1, 0, 1\} denoting weather this species may be added (1) or subtracted (-1) or both (0).
 #' @param M Matrix. See B.B and M differ in that they can be included in different proportions as specified in variable \code{BM.limits}.
 #' @param ppm Numeric. The mass error allowed when defining mass equality.  This is per included species in A and B.
 #' @param BM.limits Matrix containing columns names "M.min", "M.max", "B.n".  This defines the combinatorial depth with which to seach B and M.  For the number of species specified in B.n we search the range of values specified in \code{M.min:M.max}
 #' 
 #' @return A matrix. Rows correspond to a detected relationship.  Columns include "ppm", "A", multiple "B.*", and multiple "M.*".  A, B, and M are integers referencing the rows of the supplied matrices.  ppm is the mass error when comparing the sum of B and M with the mass of A.
 #' 
-#' @seealso See \url{https://github.com/nathaniel-mahieu/mz-unity} for examples. \code{\link[mz-unity.graph]} \code{\link[mz-unity.specgraph]}
+#' @seealso See \url{https://github.com/nathaniel-mahieu/mz-unity} for examples.[graph()] [specgraph()]
 #' 
 #' @export
 #' 
@@ -182,6 +182,7 @@ M.search = function(d, s, zd, M, A, ppm, M.limits) {
 #' \code{aggregate.self} returns a vector of group assignments containing nodes whose parents already belong to the group.  This is convenient for gathering compound groups.
 #' 
 #' @param rels Matrix. Representation of the relationship graph with column names "A" and "B.*".
+#' @param force Force aggregation even if there are conflicts.
 #'
 #' @return Numeric. A matrix containing group assignments for the correspond columns in "A" and "B.*"
 #' 

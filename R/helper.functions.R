@@ -1,13 +1,13 @@
 # Input Checking
 checkMsZs = function(mszs) {
   if (any(!c("m", "z") %in% colnames(mszs))) { stop("Supplied mass and charges must have columns with names 'm' and 'z'.") }
-  if (class(mszs) != 'data.frame') { stop("Supplied mass and charges must be a matrix.") }
+  if (!inherits(mszs, 'data.frame')) { stop("Supplied mass and charges must be a matrix.") }
 }
 checkMzs = function(mzs) {
-  if (class(mzs) != 'numeric') { stop("Supplied mass and charges must be a numeric vector.") }
+  if (!inherits(mzs, 'numeric')) { stop("Supplied mass and charges must be a numeric vector.") }
 }
 checkZHypos = function(z) {
-  if (class(mzs) != 'numeric') { stop("Supplied charge hypotheses must be a numeric vector.") }
+  if (!inherits(z, 'numeric')) { stop("Supplied charge hypotheses must be a numeric vector.") }
   if (any(sign(z.hypos) < 1)) { stop("Supplied charge hypotheses (z.hypos) must be positive integers representing number of charges.") }
 }
 
@@ -58,6 +58,10 @@ reindex = function(pConv, col.regex, indices) {
 }
 
 #' Turns a mz.unity relationship output into a graph structured data.frame.
+#' 
+#' @param mat Matrix output from mz.unity
+#' @param cols.from Column names to use as edge sources, expressed as a regex.
+#' @param cols.to Column names to use as edge targets, expressed as a regex.
 #' @export
 expandGraph = function(mat, cols.from = '^B$|^B.', cols.to = '^A$|^A.') {
   from.cols = grep(cols.from, names(mat))

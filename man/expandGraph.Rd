@@ -6,7 +6,13 @@
 \usage{
 expandGraph(mat, cols.from = "^B$|^B.", cols.to = "^A$|^A.")
 }
+\arguments{
+\item{mat}{Matrix output from mz.unity}
+
+\item{cols.from}{Column names to use as edge sources, expressed as a regex.}
+
+\item{cols.to}{Column names to use as edge targets, expressed as a regex.}
+}
 \description{
 Turns a mz.unity relationship output into a graph structured data.frame.
 }
-

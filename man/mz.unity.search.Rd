@@ -4,13 +4,18 @@
 \alias{mz.unity.search}
 \title{Perform a combinatorial search for peak relationships in mass spectral data.}
 \usage{
-mz.unity.search(A, B, M, ppm, BM.limits = cbind(M.min = c(0, 0, 0), M.max =
-  c(0, 1, 3), B.n = c(1, 2, 3)))
+mz.unity.search(
+  A,
+  B,
+  M,
+  ppm,
+  BM.limits = cbind(M.min = c(0, 0, 0), M.max = c(0, 1, 3), B.n = c(1, 2, 3))
+)
 }
 \arguments{
 \item{A}{Matrix containing columns named "m" and "z".  Column "m" is an exact mass. Column "z" is an integer charge.}
 
-\item{B}{Matrix containing columns named "m", "z", and "d".   Column "d" is one of {-1, 0, 1} denoting weather this species may be added (1) or subtracted (-1) or both (0).}
+\item{B}{Matrix containing columns named "m", "z", and "d". Column "d" is one of \{-1, 0, 1\} denoting weather this species may be added (1) or subtracted (-1) or both (0).}
 
 \item{M}{Matrix. See B.B and M differ in that they can be included in different proportions as specified in variable \code{BM.limits}.}
 
@@ -25,11 +30,10 @@ A matrix. Rows correspond to a detected relationship.  Columns include "ppm", "A
 \code{mz.unity.search} searches <m,z> values supplied in \code{B} and \code{M} for combinations which sum to a <m,z> value in \code{A}.
 }
 \details{
-This function encapsulates the combinatorial search for simple and complex peak relationships.  The search is very general and can be tailored to a specific type of relationship with the parameters \code{BM.limits} and \code{M}.  \code{M} allows you to specify additional granular formula which are not present in A and B yet could relate peaks.  This inlcudes things like isotopic masses and small ions.  \code{BM.limits} specifies the combinatorial depth with which to search.  For isotopes in which no intermediate masses are missing BM.limits could be \code{1, 1, 1}.  We can search beyond one missing peak with \code{1,2,1}.
+This function encapsulates the combinatorial search for simple and complex peak relationships.  The search is very general and can be tailored to a specific type of relationship with the parameters \code{BM.limits} and \code{M}.  \code{M} allows you to specify additional granular formula which are not present in A and B yet could relate peaks.  This includes things like isotopic masses and small ions.  \code{BM.limits} specifies the combinatorial depth with which to search.  For isotopes in which no intermediate masses are missing BM.limits could be \code{1, 1, 1}.  We can search beyond one missing peak with \code{1,2,1}.
 
 Several sets of granular formula are included by default.  They include isotopes (\code{M.iso}), charge carriers (\code{M.z}), and neutral formula (\code{M.n}).  These can be combined or extended to build a search for any set of relationships. It is generally useful to keep the set of granular formula in small groups appropriate for the combinatorial depth.  For example, isotopes generally require only a single step, whereas we may want to search for cross-polarity relationships which require the exchange of two or more charge carriers.
 }
 \seealso{
-See \url{https://github.com/nathaniel-mahieu/mz-unity} for examples. \code{\link[mz-unity.graph]} \code{\link[mz-unity.specgraph]}
+See \url{https://github.com/nathaniel-mahieu/mz-unity} for examples.[graph()] [specgraph()]
 }
-

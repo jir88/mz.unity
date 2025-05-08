@@ -4,8 +4,13 @@
 \alias{unity.specgraph}
 \title{Plot the results of mz-unity.search as a spectrum graph.}
 \usage{
-unity.specgraph(df, spec, edgetypes, speccolor = "black",
-  circlecolor = "forestgreen")
+unity.specgraph(
+  df,
+  spec,
+  edgetypes,
+  speccolor = "black",
+  circlecolor = "forestgreen"
+)
 }
 \arguments{
 \item{df}{data.frame Columns named "to", "from", "rel". "rel" is used for coloring.}
@@ -27,4 +32,3 @@ A ggplot object contianing the plot.
 \seealso{
 See \url{https://github.com/nathaniel-mahieu/mz-unity} for examples.
 }
-

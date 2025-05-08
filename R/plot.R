@@ -38,11 +38,11 @@ unity.specgraph = function(df, spec, edgetypes, speccolor="black", circlecolor =
   
   #spec = subset(spec, id %in% vs$v)
   
-  g = graph.data.frame(es, directed = T, vertices = vs)
-  l = layout.auto(g)
+  g = igraph::graph_from_data_frame(es, directed = T, vertices = vs)
+  l = igraph::layout.auto(g)
   
   df.l = as.data.frame(l)
-  df.g = get.data.frame(g)
+  df.g = igraph::as_data_frame(g)
   df.g$rel = factor(df.g$rel, levels=edgetypes[,"rel"])
   
   
@@ -51,13 +51,13 @@ unity.specgraph = function(df, spec, edgetypes, speccolor="black", circlecolor =
   df.g$to.x <- df.l$V1[match(df.g$to, as.character(vs$v))]  #  match the to locations from the node data.frame we previously connected
   df.g$to.y <- df.l$V2[match(df.g$to, as.character(vs$v))]
   
-  ggplot() +
-    scale_y_continuous(limits = c(0, max(spec$int)*1.01), expand = c(0,0)) +
-    xlab("Mass to Charge Ratio (m/Z)") + ylab("Intensity") + ggtitle("Spectrum Graph") +
-    geom_segment(data=df.g, aes(x=from.x,xend = to.x, y=from.y,yend = to.y, colour = rel), size = 0.4) +
-    scale_colour_manual(name="Relationship Type", breaks=edgetypes[,"rel"], labels=edgetypes[,"label"], values = edgetypes[,"color"], drop=F) +
-    geom_segment(data=spec, mapping=aes(x = mz, xend = mz, y = int, yend = min(int), color=g), color=speccolor, size = 0.6) +
-    geom_point(data=df.l, aes(x=V1,y=V2),size=3, colour=circlecolor, shape=1)
+  ggplot2::ggplot() +
+    ggplot2::scale_y_continuous(limits = c(0, max(spec$int)*1.01), expand = c(0,0)) +
+    ggplot2::xlab("Mass to Charge Ratio (m/Z)") + ggplot2::ylab("Intensity") + ggplot2::ggtitle("Spectrum Graph") +
+    ggplot2::geom_segment(data=df.g, ggplot2::aes(x=from.x,xend = to.x, y=from.y,yend = to.y, colour = rel), size = 0.4) +
+    ggplot2::scale_colour_manual(name="Relationship Type", breaks=edgetypes[,"rel"], labels=edgetypes[,"label"], values = edgetypes[,"color"], drop=F) +
+    ggplot2::geom_segment(data=spec, mapping=ggplot2::aes(x = mz, xend = mz, y = int, yend = min(int), color=g), color=speccolor, size = 0.6) +
+    ggplot2::geom_point(data=df.l, aes(x=V1,y=V2),size=3, colour=circlecolor, shape=1)
 }
 
 #' Plot the results of mz-unity.search as a graph.
@@ -96,29 +96,32 @@ unity.graph = function(df, spec, edgetypes, vcolors = c("forestgreen", "brown4")
   plot(g2, asp = .4, vertex.size = 2, edge.arrow.mode=1, edge.arrow.size = 0.3, vertex.label.cex=.6, vertex.frame.color='transparent', vertex.label.color = "transparent", layout=l)
 }
 
-
+#' Custom plotting theme
+#' 
+#' @param base_size Base font size to use.
+#' @importFrom ggplot2 %+replace%
 theme_nate <- function(base_size = 16)
 {
-  theme_grey(base_size = base_size) %+replace%
-    theme(
-      strip.background = element_rect(colour="grey95"), 
-      strip.text = element_text(base_size*0.9, colour="grey40", face="plain"),
+  ggplot2::theme_grey(base_size = base_size) %+replace%
+    ggplot2::theme(
+      strip.background = ggplot2::element_rect(colour="grey95"), 
+      strip.text = ggplot2::element_text(base_size*0.9, colour="grey40", face="plain"),
       
-      panel.background = element_blank(),
-      panel.grid.major = element_line(colour="grey95"),
-      panel.grid.minor = element_line(colour="grey99"),
-      plot.title = element_text(size = rel(1.2)),
+      panel.background = ggplot2::element_blank(),
+      panel.grid.major = ggplot2::element_line(colour="grey95"),
+      panel.grid.minor = ggplot2::element_line(colour="grey99"),
+      plot.title = ggplot2::element_text(size = ggplot2::rel(1.2)),
       
-      axis.title.y = element_text(vjust=1, angle=90),
-      axis.title = element_text(colour="grey40"),
-      axis.line = element_line(colour="grey95"),
-      axis.ticks = element_line(colour="grey95"),
+      axis.title.y = ggplot2::element_text(vjust=1, angle=90),
+      axis.title = ggplot2::element_text(colour="grey40"),
+      axis.line = ggplot2::element_line(colour="grey95"),
+      axis.ticks = ggplot2::element_line(colour="grey95"),
       
       legend.position="top",
-      legend.key = element_blank(),
-      legend.text = element_text(colour="grey40"),
-      legend.title  = element_text(colour="grey40", face="bold")
+      legend.key = ggplot2::element_blank(),
+      legend.text = ggplot2::element_text(colour="grey40"),
+      legend.title  = ggplot2::element_text(colour="grey40", face="bold")
     )
 }
 
-theme_set(theme_nate())
+ggplot2::theme_set(theme_nate())

@@ -17,4 +17,3 @@ Numeric. A vector containing all child nodes.
 \description{
 \code{aggregate.children} returns a vector of nodes which are children at all depths of a specified node.  This is convenient for gathering isotopic spectra.
 }
-

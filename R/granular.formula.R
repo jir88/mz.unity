@@ -1,3 +1,4 @@
+#' List of atom properties.
 #' @export
 atm = list(
   e = list(m = 0.000548579909),
@@ -50,6 +51,7 @@ atm = list(
 )
 
 
+#' Common isotope differences.
 #' @export
 M.iso = as.data.frame(matrix(c(
   atm$c13$m - atm$c12$m, atm$c13$a, 0.071, 0, 1,
@@ -75,7 +77,7 @@ dimnames = list(
 ))
 
 
-# Name, charge added, mass of adduct
+#' Name, charge added, mass of adduct
 #' @export
 M.z = as.data.frame(matrix(c(
   +1, atm$h1$m, 0.9, 0,
@@ -104,10 +106,15 @@ M.z.specs = list(
   c(35,100,37,32.3977),
   c(79,100,81,97.5114)
 )
-M.z.specs = lapply(M.z.specs, function(x) { data.frame(matrix(x, ncol=2, byrow=T, dimnames = list(NULL, c("m", "i")))) %>% {.$i = .$i / max(.$i); .} })
+M.z.specs = lapply(M.z.specs, function(x) {
+  df <- data.frame(matrix(x, ncol=2, byrow=T, dimnames = list(NULL, c("m", "i"))))
+  df$i <- df$i / max(df$i)
+  return(df)
+  })
 names(M.z.specs) = M.z$id
 
 
+#' Mass changes?
 #' @export
 M.n = as.data.frame(matrix(c(
   0, -(atm$h1$m*2+atm$o16$m), 0.6, 1,
@@ -166,5 +173,10 @@ M.n.specs = list(
   c(96,100,97,5.2878,98,4.1746,99,0.0496,100,0.0294,101,0.0001,102,0.0001),
   c(74,100,75,7.3627,76,3.6927,77,0.0927,78,0.0074,79,0.0001)
 )
-M.n.specs = lapply(M.n.specs, function(x) { data.frame(matrix(x, ncol=2, byrow=T, dimnames = list(NULL, c("m", "i")))) %>% {.$i = .$i / max(.$i); .} })
+
+M.n.specs = lapply(M.n.specs, function(x) { 
+  df <- data.frame(matrix(x, ncol=2, byrow=T, dimnames = list(NULL, c("m", "i"))))
+  df$i <- df$i / max(df$i)
+  return(df)
+  })
 names(M.n.specs) = M.n$id

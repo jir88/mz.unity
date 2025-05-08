@@ -8,6 +8,8 @@
 }
 \arguments{
 \item{rels}{Matrix. Representation of the relationship graph with column names "A" and "B.*".}
+
+\item{force}{Force aggregation even if there are conflicts.}
 }
 \value{
 Numeric. A matrix containing group assignments for the correspond columns in "A" and "B.*"
@@ -15,4 +17,3 @@ Numeric. A matrix containing group assignments for the correspond columns in "A"
 \description{
 \code{aggregate.self} returns a vector of group assignments containing nodes whose parents already belong to the group.  This is convenient for gathering compound groups.
 }
-

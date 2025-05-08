@@ -22,4 +22,3 @@ A matrix with referenced cells replaced by new values
 \details{
 This is useful for performing a search with a subset of granular formula, and reindexing to some master ID index.
 }
-
