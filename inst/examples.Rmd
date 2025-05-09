@@ -1,5 +1,7 @@
 ```{r setup, cache=FALSE, include=FALSE}
 library(knitr)
+library(ggplot2)
+library(igraph)
 opts_chunk$set(fig.width=11, fig.height=7, base64_images=F, fig.align="center", message=F, warning=F, fig.path='figure_examples/')
 ```
 
@@ -355,7 +357,7 @@ df = reindex(df, '^A$|^A.|^B$|^B.', mzz$id)
 vertices = c(unique(subset(mzz, monoiso & source %in% c("psn", "psp"))[,"id"]))
 vertices = unique(c(vertices, unlist(expandGraph(df)[,1:2])))
 
-g = graph.data.frame(expandGraph(df)[,1:2], vertices = data.frame(v=as.character(vertices)))
+g = graph_from_data_frame(expandGraph(df)[,1:2], vertices = data.frame(v=as.character(vertices)))
 plot(g, asp = .4, vertex.size = 2, edge.arrow.mode=1, edge.arrow.size = 0.3, vertex.label.cex=.6, vertex.frame.color='transparent', vertex.label.color = "transparent")
 
 length(decompose(g))
